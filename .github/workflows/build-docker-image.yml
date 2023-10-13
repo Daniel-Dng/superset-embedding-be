@@ -36,6 +36,6 @@ jobs:
       
     - name: Build and push Docker image
       run: |
-        sed --in-place -E 's/(^\s*image:)(.*)/\1 645459369268.dkr.ecr.eu-central-1.amazonaws.com\/mt-emea-airflow:v${{ github.run_id }}/' docker-compose.yml
+        sed --in-place -E 's/(^\s*image:)(.*)/\1 645459369268.dkr.ecr.eu-central-1.amazonaws.com\/mt-emea-sps-embedding-be:v${{ github.run_id }}/' docker-compose.yml
         docker-compose build
         docker-compose push
