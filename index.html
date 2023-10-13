@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <script src="https://unpkg.com/@superset-ui/embedded-sdk"></script>
+    <style>
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+
+        pretext {
+          margin-right: 10%;
+          margin-left: 10%;
+          font-family: Tahoma;
+    </style>
+  </head>
+  <body>
+    <div class="pretext">
+      <h2> Covid Statistics </h2>
+      <p> Dive into Covid data
+      <p id="dashboard-container"></p>
+      <script>
+        async function fetchGuestTokenFromBackend() {
+
+          var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+          myHeaders.append("Access-Control-Allow-Origin", "*");
+
+          var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow',
+            }
+
+          response = await fetch("http://127.0.0.1:8000/guest_login/", requestOptions)
+          let data = await response.text();
+          console.log(data);
+          return data
+        };
+
+        const myDashboard = supersetEmbeddedSdk.embedDashboard({
+          "id": "f6596a6c-f176-40c7-b159-4ec483a010ce",
+          supersetDomain: "http://127.0.0.1:8088",
+          mountPoint: document.getElementById("dashboard-container"),
+          dashboardUiConfig: {
+            hideTitle: true,
+            hideChartControls: true
+            },
+          fetchGuestToken: () => fetchGuestTokenFromBackend(),
+            });
+      </script>
+    </div>
+  </body>
+</html>

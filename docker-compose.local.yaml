@@ -1,0 +1,34 @@
+version: '2.3'
+services:
+  superset:
+    image: apache/superset:2.0.1
+    init: true
+    ports:
+      - "8088:8088"
+    volumes:
+      - ./superset_config_docker.py:/app/pythonpath/superset_config.py
+
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: superset
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    ports:
+      - "5432:5432"
+    restart: always
+
+
+volumes:
+  postgres-db-volume:
+    name: "superset-embedding-be"
+
+
