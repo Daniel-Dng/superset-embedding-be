@@ -1,6 +1,7 @@
-version: '2.3'
+version: '3.8'
 services:
   fastapi:
+    image: 645459369268.dkr.ecr.eu-central-1.amazonaws.com/mt-emea-sps-embedding-be:0.0.2
     build:
       dockerfile: Dockerfile
-    restart: always
+      context: .
