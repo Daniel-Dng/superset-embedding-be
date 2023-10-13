@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  labels:
+    app: sps-embedding
+    component: backend
+  name: sps-embedding-be
+  namespace: bi
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: mt-emea-sps-embedding-be.apexdigital.online
+    http:
+      paths:
+      - backend:
+          service:
+            name: sps-embedding-be
+            port:
+              name: tcp8000
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - mt-emea-sps-embedding-be.apexdigital.online
+    secretName: sps-embedding-be-tls

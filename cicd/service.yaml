@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sps-embedding
+    component: backend
+  name: sps-embedding-be
+  namespace: bi
+spec:
+  ports:
+  - name: tcp8000
+    port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: sps-embedding
+    component: backend
+  sessionAffinity: None
+  type: ClusterIP
