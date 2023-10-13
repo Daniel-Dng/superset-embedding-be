@@ -1,5 +1,15 @@
 version: '2.3'
 services:
+  fastapi:
+    build:
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - superset
+      - db
+
   superset:
     image: apache/superset:2.0.1
     init: true
