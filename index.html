@@ -15,8 +15,7 @@
   </head>
   <body>
     <div class="pretext">
-      <h2> Covid Statistics </h2>
-      <p> Dive into Covid data
+<!--      <h3> %SUPERSET_BASE_URL% </h3>-->
       <p id="dashboard-container"></p>
       <script>
         async function fetchGuestTokenFromBackend() {
@@ -31,21 +30,22 @@
             redirect: 'follow',
             }
 
-          response = await fetch("http://127.0.0.1:8000/guest_login/", requestOptions)
-          let data = await response.text();
-          console.log(data);
+          let response = await fetch("http://127.0.0.1:8000/guest_login/5ed5c9bf-9e46-415c-9a3e-9c9d780c2fc9", requestOptions);
+          let data = await response.text()
+<!--          console.log(data);-->
           return data
         };
 
         const myDashboard = supersetEmbeddedSdk.embedDashboard({
-          "id": "f6596a6c-f176-40c7-b159-4ec483a010ce",
+          "id": "5ed5c9bf-9e46-415c-9a3e-9c9d780c2fc9",
           supersetDomain: "http://127.0.0.1:8088",
           mountPoint: document.getElementById("dashboard-container"),
           dashboardUiConfig: {
             hideTitle: true,
             hideChartControls: true
             },
-          fetchGuestToken: () => fetchGuestTokenFromBackend(),
+<!--          fetchGuestToken: () => fetchGuestTokenFromBackend()-->
+          fetchGuestToken: () => "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4ifSwicmVzb3VyY2VzIjpbeyJ0eXBlIjoiZGFzaGJvYXJkIiwiaWQiOiI1ZWQ1YzliZi05ZTQ2LTQxNWMtOWEzZS05YzlkNzgwYzJmYzkifV0sInJsc19ydWxlcyI6W10sImlhdCI6MTY5NzI2MzYxMC4xNDA0MDQyLCJleHAiOjE2OTcyNjM5MTAuMTQwNDA0MiwiYXVkIjoiaHR0cDovLzAuMC4wLjA6ODA4MC8iLCJ0eXBlIjoiZ3Vlc3QifQ.GKkCgBgUUQJwy1VPWCk1AQ5imjGbZT5QBduQW1AoONU",
             });
       </script>
     </div>
