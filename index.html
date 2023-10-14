@@ -31,8 +31,7 @@
             }
 
           let response = await fetch("http://127.0.0.1:8000/guest_login/5ed5c9bf-9e46-415c-9a3e-9c9d780c2fc9", requestOptions);
-          let data = await response.text()
-<!--          console.log(data);-->
+          let data = await response.json()
           return data
         };
 
