@@ -9,6 +9,8 @@ services:
     depends_on:
       - superset
       - db
+    env_file:
+      - .env
 
   superset:
     image: apache/superset:2.0.1

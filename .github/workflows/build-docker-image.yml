@@ -1,0 +1,46 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Set up AWS credentials
+      run: |
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set region eu-central-1
+      
+    - name: Configure kubectl
+      run: |
+        aws eks update-kubeconfig --region eu-central-1 --name bi-01
+      
+    - name: Log in to Amazon ECR
+      run: |
+        aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 645459369268.dkr.ecr.eu-central-1.amazonaws.com
+        
+    - name: Initialize and update submodules
+      run: |
+        git submodule init
+        git submodule update
+      
+    - name: Build and push Docker image
+      run: |
+        sed --in-place -E 's/(^\s*image:)(.*)/\1 645459369268.dkr.ecr.eu-central-1.amazonaws.com\/mt-emea-sps-embedding-be:v${{ github.run_id }}/' docker-compose.yml
+        docker-compose build
+        docker-compose push
+
+    - name: Deploy
+      run: |
+        sed --in-place -E 's/(^\s*image:)(.*)/\1 645459369268.dkr.ecr.eu-central-1.amazonaws.com\/mt-emea-sps-embedding-be:v${{ github.run_id }}/' cicd/deployment.yaml
+        kubectl -n bi apply -f cicd/
