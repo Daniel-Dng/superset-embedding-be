@@ -44,11 +44,15 @@ async def guest_login(dashboard_id):
     })
 
     bearer_token = "Bearer " + superset_access_token
-    # print(bearer_token)
     response2 = requests.post(
         url=f"{settings.SUPERSET_BASE_URL}/api/v1/security/guest_token",
         data=payload,
         headers={"Authorization": bearer_token, 'Accept': 'application/json', 'Content-Type': 'application/json'})
-    # print(response2.json())
     return response2.json()['token']
 
+
+# In case need to get BE variables
+# @app.get("/config/")
+# async def get_config():
+#     return {"SUPERSET_BASE_URL": settings.SUPERSET_BASE_URL,
+#             "BE_BASE_URL": settings.BE_BASE_URL}

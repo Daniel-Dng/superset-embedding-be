@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     SUPERSET_PW: str = 'admin'
     SUPERSET_BASE_URL: str = 'http://127.0.0.1:8088'
 
-    # BE_BASE_URL: str = 'http://127.0.0.1:8000/'
+    BE_BASE_URL: str = 'http://127.0.0.1:8000/'
 
 
 settings = Settings()

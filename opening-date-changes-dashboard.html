@@ -6,7 +6,6 @@
         width: 100%;
         height: 100%;
         border: none;
-
         pretext {
           margin-right: 10%;
           margin-left: 10%;
@@ -15,7 +14,6 @@
   </head>
   <body>
     <div class="pretext">
-<!--      <h3> %SUPERSET_BASE_URL% </h3>-->
       <p id="dashboard-container"></p>
       <script>
         async function fetchGuestTokenFromBackend() {
@@ -29,15 +27,14 @@
             headers: myHeaders,
             redirect: 'follow',
             }
-
-          let response = await fetch("http://127.0.0.1:8000/guest_login/5ed5c9bf-9e46-415c-9a3e-9c9d780c2fc9", requestOptions);
+          let response = await fetch(`http://127.0.0.1:8000/guest_login/5ed5c9bf-9e46-415c-9a3e-9c9d780c2fc9`, requestOptions);
           let data = await response.json()
           return data
         };
 
         const myDashboard = supersetEmbeddedSdk.embedDashboard({
           "id": "5ed5c9bf-9e46-415c-9a3e-9c9d780c2fc9",
-          supersetDomain: "http://127.0.0.1:8088",
+          supersetDomain: `http://127.0.0.1:8088`,
           mountPoint: document.getElementById("dashboard-container"),
           dashboardUiConfig: {
             hideTitle: true,
